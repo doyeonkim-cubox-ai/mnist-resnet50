@@ -1,3 +1,4 @@
+# mnist-resnet50
 ### Introduction
 
 pytorch 실습 이후 실제로 사용해보고자 간단한 이미지 분류 모델을 구현했다.
