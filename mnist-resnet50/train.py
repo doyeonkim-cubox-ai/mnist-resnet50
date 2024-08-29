@@ -23,7 +23,7 @@ def main():
     # lr: 0.002, epoch: 20 -> 0.021
     # lr: 0.002, epoch: 30 -> 0.022
     # lr: 0.002, epoch: 15 -> 0.029
-    # lr: 0.001, epoch: 15 ->
+    # lr: 0.001, epoch: 15 -> 0.017
 
     # data load
     transform = transforms.Compose([transforms.ToTensor()])
