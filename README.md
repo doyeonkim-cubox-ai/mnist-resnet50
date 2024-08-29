@@ -20,9 +20,9 @@ python test.py
 ```
 ### Detail
 - Hyperparameter
-    - learning rate: (0.01, 0.005, 0.0025, 0.002, 0.001)
+    - learning rate: 0.001
     - batch size: 32
-    - epochs: (20, 30, 40)
+    - epochs: 15
 - Optimization
     - Adam
 - Cost computation
