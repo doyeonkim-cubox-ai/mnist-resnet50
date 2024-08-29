@@ -7,9 +7,11 @@ pytorch 실습 이후 실제로 사용해보고자 간단한 이미지 분류 �
 
 ### Files
 - train.py
-    - train data 다운로드 및 모델 학습
+  - train data 다운로드 및 모델 학습
 - test.py
-    - test data를 이용한 모델의 정확도 계산
+  - test data를 이용한 모델의 정확도 계산
+- model.py
+  - Mymodel 정의
 
 ### Run
 ```
