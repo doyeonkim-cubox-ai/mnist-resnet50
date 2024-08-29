@@ -1,3 +1,4 @@
 .idea
 .gitmessage.txt
 mnist
+mnist-resnet50/__pycache__
