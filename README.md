@@ -3,7 +3,7 @@
 
 pytorch 실습 이후 실제로 사용해보고자 간단한 이미지 분류 모델을 구현했다.
 
-모델 학습에 사용한 데이터는 MNIST, 모델은 pytorch에서 제공하고 있는 resnet50을 활용하였다.
+모델 학습에 사용한 데이터는 MNIST dataset, 모델은 pytorch에서 제공하고 있는 resnet50을 활용하였다.
 
 ### Files
 - model.py
