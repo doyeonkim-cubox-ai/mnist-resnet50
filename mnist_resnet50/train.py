@@ -3,8 +3,9 @@ import torch.nn as nn
 from torch.utils.data import random_split
 import torchvision
 import torchvision.transforms as transforms
-import model
 import wandb
+from tqdm import tqdm, trange
+from mnist_resnet50 import model
 
 
 def main():
@@ -28,7 +29,7 @@ def main():
 
     # data load
     transform = transforms.Compose([transforms.ToTensor()])
-    train = torchvision.datasets.MNIST(root='../mnist', train=True, download=True, transform=transform)
+    train = torchvision.datasets.MNIST(root='./mnist', train=True, download=True, transform=transform)
     train, valid = random_split(train, [int(len(train)*0.9), int(len(train)*0.1)])
     trainloader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True)
     validloader = torch.utils.data.DataLoader(valid, batch_size=batch_size, shuffle=False)
@@ -44,16 +45,16 @@ def main():
     train_batch = len(trainloader)
     valid_batch = len(validloader)
 
-    wandb.init(project='mnist_resnet50', name='240829')
+    wandb.init(project='mnist_resnet50', name='240830')
 
     print('Learning started')
 
-    for epoch in range(training_epochs):
+    for epoch in trange(training_epochs):
         avg_train_cost = 0
         avg_valid_cost = 0
         # set to train
         net.train()
-        for x_tr, y_tr in trainloader:
+        for x_tr, y_tr in tqdm(trainloader):
             x_tr = x_tr.to(device)
             y_tr = y_tr.to(device)
 
@@ -67,7 +68,7 @@ def main():
         # switch to eval
         net.eval()
         # Check overfitting
-        for x_val, y_val in validloader:
+        for x_val, y_val in tqdm(validloader):
             x_val = x_val.to(device)
             y_val = y_val.to(device)
 
@@ -78,10 +79,14 @@ def main():
             avg_valid_cost += val_cost / valid_batch
 
         print('Epoch: {} Train error: {} Valid error: {}'.format(epoch+1, avg_train_cost, avg_valid_cost))
-        wandb.log({'train_loss': avg_train_cost, 'valid_loss' : avg_valid_cost})
+        wandb.log({'train_loss': avg_train_cost, 'valid_loss': avg_valid_cost})
     print('Learning finished')
 
-    torch.save(net.state_dict(), '../model/model.pth')
+    torch.save(net.state_dict(), './model/model.pth')
+
+    # onnx
+    x = torch.randn(1, 1, 28, 28).to(device)
+    torch.onnx.export(net, x, "./model/model.onnx")
 
 
 if __name__ == "__main__":

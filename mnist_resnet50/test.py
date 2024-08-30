@@ -17,12 +17,12 @@ def main():
 
     # data load
     transform = transforms.Compose([transforms.ToTensor()])
-    test = torchvision.datasets.MNIST(root='../mnist', train=False, download=True, transform=transform)
+    test = torchvision.datasets.MNIST(root='./mnist', train=False, download=True, transform=transform)
     testloader = torch.utils.data.DataLoader(test, batch_size=batch_size, shuffle=False)
 
     # model load
     net = model.Mymodel().to(device)
-    net.load_state_dict(torch.load('../model/model.pth', weights_only=False))
+    net.load_state_dict(torch.load('./model/model.pth', weights_only=False))
 
     # set to eval
     net.eval()
