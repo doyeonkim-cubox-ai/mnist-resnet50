@@ -1,32 +1,36 @@
 # mnist-resnet50
+간단한 이미지(숫자) 분류 모델입니다.
+
 ### Introduction
 
-pytorch 실습 이후 실제로 사용해보고자 간단한 이미지 분류 모델을 구현했다.
+pytorch 스터디 이후 실제로 사용해보고자 간단한 이미지 분류 모델을 구현했습니다.
+모델은 pytorch에서 제공하고 있는 resnet50, 학습 데이터셋은 mnist를 사용했습니다.
 
-모델 학습에 사용한 데이터는 MNIST dataset, 모델은 pytorch에서 제공하고 있는 resnet50을 활용하였다.
-
-### Files
-- model.py
-  - Mymodel 정의
-- train.py
-  - train data 다운로드 및 모델 학습
-- test.py
-  - test data를 이용한 모델의 정확도 계산
-
-### Run
+### Requirements
+Run this line below:
 ```
 pip install -r requirements.txt
+```
+
+### Usage
+
+##### 1. Clone the repo
+```
+git clone https://github.com/doyeonkim-cubox-ai/mnist-resnet50.git
+```
+##### 2. train & test model
+```
+mkdir model
 python -m mnist_resnet50.train
 python -m mnist_resnet50.test
 ```
-
-### Inference.py
-- change line18 to use your own data
+##### 3.  inference
 ```
+# change line18 to use your own data
 image = Image.open("{PATH_TO_IMAGE}/{IMAGE_NAME}.{png/jpg/..}")
-```
-- run
-```
+# run inference.py
 python inference.py
 ```
 해당 이미지에 대한 분류 결과가 출력될 것이다.
+
+
