@@ -1,7 +1,7 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
-import model
+from mnist_resnet50 import model
 
 
 def main():
