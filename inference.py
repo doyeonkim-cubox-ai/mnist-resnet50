@@ -21,7 +21,7 @@ def main():
     img_tensor = img_tensor.unsqueeze(0)
 
     model = onnx.load("./model/model.onnx")
-    session = ort.InferenceSession("./model/model.onnx")
+    session = ort.InferenceSession("./model/model.onnx", providers=['CPUExecutionProvider'])
 
     ort_in = {session.get_inputs()[0].name: np.array(img_tensor)}
     ort_out = session.run(None, ort_in)[0]
