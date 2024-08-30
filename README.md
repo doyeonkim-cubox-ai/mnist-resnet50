@@ -31,6 +31,6 @@ image = Image.open("{PATH_TO_IMAGE}/{IMAGE_NAME}.{png/jpg/..}")
 # run inference.py
 python inference.py
 ```
-해당 이미지에 대한 분류 결과가 출력될 것이다.
+해당 이미지에 대한 분류 결과가 출력될 것입니다.
 
 
