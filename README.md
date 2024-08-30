@@ -16,16 +16,17 @@ pytorch 실습 이후 실제로 사용해보고자 간단한 이미지 분류 �
 ### Run
 ```
 pip install -r requirements.txt
-cd mnist-resnet50
-python train.py
-python test.py
+python -m mnist-resnet50.train
+python -m mnist-resnet50.test
 ```
-### Detail
-- Hyperparameter
-    - learning rate: 0.001
-    - batch size: 32
-    - epochs: 15
-- Optimization
-    - Adam
-- Cost computation
-    - Cross entropy loss
+
+### Inference.py
+- change line18 to use your own data
+```
+image = Image.open("{PATH_TO_IMAGE}/{IMAGE_NAME}.{png/jpg/..}")
+```
+- run
+```
+python inference.py
+```
+해당 이미지에 대한 분류 결과가 출력될 것이다.
