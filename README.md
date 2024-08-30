@@ -16,8 +16,8 @@ pytorch 실습 이후 실제로 사용해보고자 간단한 이미지 분류 �
 ### Run
 ```
 pip install -r requirements.txt
-python -m mnist-resnet50.train
-python -m mnist-resnet50.test
+python -m mnist_resnet50.train
+python -m mnist_resnet50.test
 ```
 
 ### Inference.py
