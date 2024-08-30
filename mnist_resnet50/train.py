@@ -4,6 +4,7 @@ from torch.utils.data import random_split
 import torchvision
 import torchvision.transforms as transforms
 import model
+import wandb
 
 
 def main():
@@ -43,6 +44,8 @@ def main():
     train_batch = len(trainloader)
     valid_batch = len(validloader)
 
+    wandb.init(project='mnist_resnet50', name='240829')
+
     print('Learning started')
 
     for epoch in range(training_epochs):
@@ -75,6 +78,7 @@ def main():
             avg_valid_cost += val_cost / valid_batch
 
         print('Epoch: {} Train error: {} Valid error: {}'.format(epoch+1, avg_train_cost, avg_valid_cost))
+        wandb.log({'train_loss': avg_train_cost, 'valid_loss' : avg_valid_cost})
     print('Learning finished')
 
     torch.save(net.state_dict(), '../model/model.pth')
