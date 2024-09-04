@@ -6,21 +6,20 @@ import numpy as np
 import onnx
 import onnxruntime as ort
 from PIL import Image
+import argparse
 
 
 def main():
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    torch.manual_seed(777)
-    if device == 'cuda':
-        torch.cuda.manual_seed_all(777)
+    # Add parser
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--img', type=str, help='Image path(ex. /**/image.*)')
+    img_path = parser.parse_args()
 
-    # preprocess
-    image = Image.open("./inference_data/image1.png")
+    image = Image.open(img_path.img)
     image = image.resize((28, 28)).convert('L')
     img_tensor = transforms.ToTensor()(image)
     img_tensor = img_tensor.unsqueeze(0)
 
-    model = onnx.load("./model/model.onnx")
     session = ort.InferenceSession("./model/model.onnx", providers=['CPUExecutionProvider'])
 
     ort_in = {session.get_inputs()[0].name: np.array(img_tensor)}
