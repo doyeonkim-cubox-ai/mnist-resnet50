@@ -4,5 +4,4 @@ mnist
 **/__pycache__
 model
 **/wandb
-customize.py
 inference_data
