@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--img', type=str, help='Image path(ex. /**/image.*)')
     img_path = parser.parse_args()
 
+    # Preprocess
     image = Image.open(img_path.img)
     image = image.resize((28, 28)).convert('L')
     img_tensor = transforms.ToTensor()(image)
