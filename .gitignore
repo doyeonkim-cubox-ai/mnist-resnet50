@@ -5,3 +5,5 @@ mnist
 model
 **/wandb
 inference_data
+dataset
+lightning_logs
