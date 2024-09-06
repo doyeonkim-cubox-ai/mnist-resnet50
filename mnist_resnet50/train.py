@@ -52,7 +52,7 @@ def main():
     train_batch = len(train_loader)
     valid_batch = len(valid_loader)
 
-    # wandb.init(project='mnist_resnet50', name='240905')
+    wandb.init(project='mnist_resnet50', name='240905')
 
     print('Learning started')
 
@@ -86,7 +86,7 @@ def main():
             avg_valid_cost += val_cost / valid_batch
 
         print('Epoch: {} Train error: {} Valid error: {}'.format(epoch+1, avg_train_cost, avg_valid_cost))
-        # wandb.log({'train_loss': avg_train_cost, 'valid_loss': avg_valid_cost})
+        wandb.log({'train_loss': avg_train_cost, 'valid_loss': avg_valid_cost})
     print('Learning finished')
 
     torch.save(net.state_dict(), './model/model.pth')
