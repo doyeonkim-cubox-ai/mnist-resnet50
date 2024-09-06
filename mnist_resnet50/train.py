@@ -6,6 +6,7 @@ import torchvision.transforms as transforms
 import wandb
 from tqdm import tqdm, trange
 from mnist_resnet50 import model
+from mnist_resnet50 import dataset
 
 
 def main():
@@ -29,23 +30,29 @@ def main():
 
     # data load
     transform = transforms.Compose([transforms.ToTensor()])
-    train = torchvision.datasets.MNIST(root='./mnist', train=True, download=True, transform=transform)
-    train, valid = random_split(train, [int(len(train)*0.9), int(len(train)*0.1)])
-    trainloader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True)
-    validloader = torch.utils.data.DataLoader(valid, batch_size=batch_size, shuffle=False)
+    ## using MNIST
+    # train = torchvision.datasets.MNIST(root='./mnist', train=True, download=True, transform=transform)
+    # train, valid = random_split(train, [int(len(train)*0.9), int(len(train)*0.1)])
+    # trainloader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True)
+    # validloader = torch.utils.data.DataLoader(valid, batch_size=batch_size, shuffle=False)
+    ## using custom dataset: dataset.py
+    train = dataset.MyData("./dataset/train/train", transform=transform)
+    train, valid = random_split(train, [int(len(train)*0.9), len(train)-int(len(train)*0.9)])
+    train_loader = torch.utils.data.DataLoader(train, batch_size=batch_size, shuffle=True)
+    valid_loader = torch.utils.data.DataLoader(valid, batch_size=batch_size, shuffle=False)
 
     # model
-    net = model.Mymodel().to(device)
+    net = model.MyModel().to(device)
 
     # Loss function & optimizer
     criterion = nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate)
 
     # train
-    train_batch = len(trainloader)
-    valid_batch = len(validloader)
+    train_batch = len(train_loader)
+    valid_batch = len(valid_loader)
 
-    wandb.init(project='mnist_resnet50', name='240830')
+    # wandb.init(project='mnist_resnet50', name='240905')
 
     print('Learning started')
 
@@ -54,7 +61,7 @@ def main():
         avg_valid_cost = 0
         # set to train
         net.train()
-        for x_tr, y_tr in tqdm(trainloader):
+        for x_tr, y_tr in tqdm(train_loader):
             x_tr = x_tr.to(device)
             y_tr = y_tr.to(device)
 
@@ -68,7 +75,7 @@ def main():
         # switch to eval
         net.eval()
         # Check overfitting
-        for x_val, y_val in tqdm(validloader):
+        for x_val, y_val in tqdm(valid_loader):
             x_val = x_val.to(device)
             y_val = y_val.to(device)
 
@@ -79,7 +86,7 @@ def main():
             avg_valid_cost += val_cost / valid_batch
 
         print('Epoch: {} Train error: {} Valid error: {}'.format(epoch+1, avg_train_cost, avg_valid_cost))
-        wandb.log({'train_loss': avg_train_cost, 'valid_loss': avg_valid_cost})
+        # wandb.log({'train_loss': avg_train_cost, 'valid_loss': avg_valid_cost})
     print('Learning finished')
 
     torch.save(net.state_dict(), './model/model.pth')
